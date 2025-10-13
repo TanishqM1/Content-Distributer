@@ -1,0 +1,5 @@
+notes regarding each social media platform.
+
+* Youtube V3 Video API. Docs: (https://developers.google.com/youtube/v3/docs/videos/insert)
+    - POST https://www.googleapis.com/upload/youtube/v3/videos
+    - need auth w/ this scope: https://www.googleapis.com/auth/youtube.upload

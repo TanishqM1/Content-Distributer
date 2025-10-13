@@ -1,5 +1,13 @@
 package tools
 
+import (
+	"bytes"
+	"encoding/json"
+	"fmt"
+	"io"
+	"net/http"
+)
+
 // youtube
 func (y YouTubeUploader) BuildAPI() map[string]interface{} {
 	return map[string]interface{}{
@@ -100,8 +108,45 @@ func (l LinkedInUploader) BuildAPI() map[string]interface{} {
 // basic implementation
 func SendAPI(u UploadContent) (string, bool, error) {
 	// implement SendAPI
-	platformname := "temp"
-	success := true
+	body := u.BuildAPI()
+	jsonData, _ := json.Marshal(body)
+	var endpointURL string
+	platform := body["platform_name"]
 
-	return platformname, success, nil
+	switch platform {
+	case "youtube":
+		endpointURL = "https://www.googleapis.com/upload/youtube/v3/videos?part=snippet,status"
+	case "pinterest":
+		endpointURL = "https://api.pinterest.com/v5/pins"
+	case "reddit":
+		endpointURL = "https://oauth.reddit.com/api/submit"
+	case "linkedin":
+		endpointURL = "https://api.linkedin.com/v2/ugcPosts"
+	}
+
+	req, err := http.NewRequest("POST", endpointURL, bytes.NewReader(jsonData))
+	req.Header.Set("Authorization", "Bearer "+body["access_token"].(string))
+	req.Header.Set("Content-Type", "application/json")
+
+	if err != nil {
+		return platform.(string), false, err
+	}
+
+	client := &http.Client{}
+	resp, err := client.Do(req)
+
+	if err != nil {
+		return platform.(string), false, err
+	}
+	defer resp.Body.Close()
+
+	respBody, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return platform.(string), false, err
+	}
+	if resp.StatusCode < 200 || resp.StatusCode >= 300 {
+		return platform.(string), false, fmt.Errorf("API Request Failed: %s", string(respBody))
+	}
+
+	return platform.(string), true, nil
 }
