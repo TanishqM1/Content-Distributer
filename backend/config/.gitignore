@@ -1,0 +1,42 @@
+# ===== Go Build Artifacts =====
+bin/
+build/
+*.exe
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+
+# Go workspace files
+go.work
+go.work.sum
+
+# ===== OS / Editor Files =====
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+
+# ===== Dependency Cache =====
+vendor/
+*.log
+
+# ===== Environment / Config Files =====
+.env
+.env.local
+config.yaml
+config.json
+
+# ===== Database / Uploads =====
+*.db
+*.sqlite
+*.sqlite3
+uploads/
+media/
+
+# ===== Misc =====
+# Ignore any temporary files
+tmp/
+*.tmp
