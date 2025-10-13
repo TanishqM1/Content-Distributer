@@ -10,12 +10,13 @@ import (
 
 func Handler(r *chi.Mux) {
 	// strip trailing slashes (from chi package)
-	r.Use(chimiddle.StripSlahes)
+	r.Use(chimiddle.StripSlashes)
 
 	// setup route (no middleware from our end)
 	// Need to implement the PostContent function still!
 
 	r.Route("/post", func(router chi.Router) {
-		router.Get("/content", PostContent)
+		// implementation for this endpoint
+		// ==> router.Get("/content", PostContent)
 	})
 }
