@@ -17,6 +17,6 @@ func Handler(r *chi.Mux) {
 
 	r.Route("/post", func(router chi.Router) {
 		// implementation for this endpoint
-		// ==> router.Get("/content", PostContent)
+		router.Get("/content", PostContent)
 	})
 }
