@@ -15,6 +15,49 @@ type Error struct {
 	Message string
 }
 
+// TotalFields represents the complete request body received from the frontend.
+// It includes all fields (common + platform-specific) for all supported platforms.
+type TotalFields struct {
+	// --- Common fields ---
+	Platforms   []string `json:"platforms"`   // e.g. ["youtube", "pinterest", "linkedin"]
+	Title       string   `json:"title"`       // shared by YouTube, Pinterest, Reddit
+	Description string   `json:"description"` // shared by YouTube, Pinterest
+	Caption     string   `json:"caption"`     // Instagram, optional for others
+	Tags        []string `json:"tags"`        // YouTube
+	CategoryID  string   `json:"category_id"` // YouTube
+	MediaFile   string   `json:"media_file"`  // base64 or URL from frontend
+
+	// --- YouTube-specific ---
+	PrivacyStatus string `json:"privacy_status"` // "public", "private", or "unlisted"
+
+	// --- Instagram-specific ---
+	ImageURL   string `json:"image_url"`   // URL if remote; could reuse media_file
+	LocationID string `json:"location_id"` // optional
+	UserTags   string `json:"user_tags"`   // optional, comma-separated
+
+	// --- Pinterest-specific ---
+	BoardID    string `json:"board_id"`
+	Link       string `json:"link"`
+	SourceType string `json:"source_type"` // e.g. "image_url"
+
+	// --- Reddit-specific ---
+	Subreddit string `json:"subreddit"`
+	PostType  string `json:"post_type"` // "self", "link", or "image"
+	Text      string `json:"text"`      // for "self" posts
+	URL       string `json:"url"`       // for "link" or "image" posts
+	Resubmit  bool   `json:"resubmit"`
+	NSFW      bool   `json:"nsfw"`
+
+	// --- LinkedIn-specific ---
+	Author         string `json:"author"`          // URN of person/org
+	LifecycleState string `json:"lifecycle_state"` // usually "PUBLISHED"
+	TextLinkedIn   string `json:"text_linkedin"`   // avoids name clash with Reddit "text"
+	MediaType      string `json:"media_type"`      // "IMAGE" or "VIDEO"
+	MediaStatus    string `json:"media_status"`    // "READY"
+	MediaPath      string `json:"media_path"`      // URN or URL
+	Visibility     string `json:"visibility"`      // "PUBLIC"
+}
+
 func writeError(w http.ResponseWriter, message string, code int) {
 	resp := Error{
 		Code:    code,
