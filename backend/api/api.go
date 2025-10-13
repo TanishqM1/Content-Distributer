@@ -23,12 +23,12 @@ type TotalFields struct {
 	Title       string   `json:"title"`       // shared by YouTube, Pinterest, Reddit
 	Description string   `json:"description"` // shared by YouTube, Pinterest
 	Caption     string   `json:"caption"`     // Instagram, optional for others
-	Tags        []string `json:"tags"`        // YouTube
-	CategoryID  string   `json:"category_id"` // YouTube
 	MediaFile   string   `json:"media_file"`  // base64 or URL from frontend
 
 	// --- YouTube-specific ---
-	PrivacyStatus string `json:"privacy_status"` // "public", "private", or "unlisted"
+	PrivacyStatus string   `json:"privacy_status"` // "public", "private", or "unlisted"
+	CategoryID    string   `json:"category_id"`    // YouTube
+	Tags          []string `json:"tags"`           // YouTube
 
 	// --- Instagram-specific ---
 	ImageURL   string `json:"image_url"`   // URL if remote; could reuse media_file
