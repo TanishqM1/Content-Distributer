@@ -18,7 +18,7 @@ func main() {
 	handlers.Handler(r)
 	fmt.Println("Starting My Local Go API Service!")
 
-	err := http.ListenAndServe("localhost:800", r)
+	err := http.ListenAndServe("localhost:8000", r)
 
 	// if for some reason the server does not start.
 	if err != nil {
