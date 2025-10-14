@@ -34,7 +34,6 @@ func PostContent(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	// no we have an "uploads" folder with struct objects. We need to call SendAPI() on all of these struct objects.
-	fmt.Println(uploads)
 	for _, v := range uploads {
 		tools.SendAPI(v)
 

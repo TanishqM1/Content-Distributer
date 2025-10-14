@@ -1,9 +1,6 @@
 package tools
 
 import (
-	"encoding/json"
-	"fmt"
-
 	"github.com/TanishqM1/SocialContentDistributer/uploads/linkedin"
 	"github.com/TanishqM1/SocialContentDistributer/uploads/pinterest"
 	"github.com/TanishqM1/SocialContentDistributer/uploads/reddit"
@@ -111,10 +108,8 @@ func (l LinkedInUploader) BuildAPI() map[string]interface{} {
 func SendAPI(u UploadContent) {
 	// implement SendAPI
 	body := u.BuildAPI()
-	jsonData, _ := json.Marshal(body)
+	// jsonData, _ := json.Marshal(body) --> this is a byte array!
 	platform := body["platform_name"]
-
-	fmt.Printf("data: %v", jsonData)
 
 	switch platform {
 	case "youtube":
