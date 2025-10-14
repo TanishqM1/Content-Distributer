@@ -22,15 +22,6 @@ import (
 	"google.golang.org/api/youtube/v3"
 )
 
-var (
-	filename    = flag.String("filename", "", "Name of video file to upload")
-	title       = flag.String("title", "Test Title", "Video title")
-	description = flag.String("description", "Test Description", "Video description")
-	category    = flag.String("category", "22", "Video category")
-	keywords    = flag.String("keywords", "", "Comma separated list of video keywords")
-	privacy     = flag.String("privacy", "unlisted", "Video privacy status")
-)
-
 // This variable indicates whether the script should launch a web server to
 // initiate the authorization flow or just display the URL in the terminal
 // window. Note the following instructions based on this setting:
@@ -236,7 +227,7 @@ func saveToken(file string, token *oauth2.Token) {
 	json.NewEncoder(f).Encode(token)
 }
 
-func UploadYoutube(title *string, description *string, category *string, privacy *string, filename *string) {
+func UploadYoutube(title *string, description *string, category *string, privacy *string, filename *string, keywords *string) {
 	fmt.Printf("\n UploadYoutube() function")
 	flag.Parse()
 

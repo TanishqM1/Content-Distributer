@@ -118,8 +118,13 @@ func SendAPI(u UploadContent) {
 		category := body["snippet"].(map[string]interface{})["categoryId"].(string)
 		privacy := body["status"].(map[string]interface{})["privacyStatus"].(string)
 		filename := body["media"].(map[string]interface{})["file_data"].(string)
+		tagslist := body["snippet"].(map[string]interface{})["tags"].([]string)
+		var tags string
+		for _, v := range tagslist {
+			tags += v
+		}
 
-		youtube.UploadYoutube(&title, &description, &category, &privacy, &filename)
+		youtube.UploadYoutube(&title, &description, &category, &privacy, &filename, &tags)
 
 	case "pinterest":
 		pinterest.UploadPinterest()
