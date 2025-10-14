@@ -1,4 +1,4 @@
-package main
+package reddit
 
 import (
 	"bytes"
@@ -17,7 +17,8 @@ const (
 	password     = "Social#2510"
 )
 
-func main() {
+func UploadReddit() {
+	fmt.Print("Reddit!")
 	// Step 1: Get access token
 	data := url.Values{}
 	data.Set("grant_type", "password")

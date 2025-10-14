@@ -1,4 +1,4 @@
-package main
+package youtube
 
 import (
 	"encoding/json"
@@ -236,7 +236,7 @@ func saveToken(file string, token *oauth2.Token) {
 	json.NewEncoder(f).Encode(token)
 }
 
-func main() {
+func UploadYoutube() {
 	flag.Parse()
 
 	if *filename == "" {
