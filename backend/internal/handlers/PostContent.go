@@ -56,7 +56,7 @@ func BuildUploadStructs(params api.TotalFields) ([]tools.UploadContent, error) {
 				Tags:          params.Tags,
 				CategoryID:    params.CategoryID,
 				PrivacyStatus: params.PrivacyStatus,
-				MediaFile:     []byte(params.MediaFile),
+				MediaFile:     params.MediaFile,
 			})
 
 		case "instagram":

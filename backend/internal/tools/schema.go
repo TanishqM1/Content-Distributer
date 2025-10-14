@@ -13,7 +13,7 @@ type YouTubeUploader struct {
 	Tags          []string
 	CategoryID    string
 	PrivacyStatus string // "public", "private", or "unlisted"
-	MediaFile     []byte // binary video data
+	MediaFile     string // binary video data
 }
 
 // ===== Instagram =====

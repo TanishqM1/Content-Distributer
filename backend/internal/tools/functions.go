@@ -113,7 +113,14 @@ func SendAPI(u UploadContent) {
 
 	switch platform {
 	case "youtube":
-		youtube.UploadYoutube()
+		title := body["snippet"].(map[string]interface{})["title"].(string)
+		description := body["snippet"].(map[string]interface{})["description"].(string)
+		category := body["snippet"].(map[string]interface{})["categoryId"].(string)
+		privacy := body["status"].(map[string]interface{})["privacyStatus"].(string)
+		filename := body["media"].(map[string]interface{})["file_data"].(string)
+
+		youtube.UploadYoutube(&title, &description, &category, &privacy, &filename)
+
 	case "pinterest":
 		pinterest.UploadPinterest()
 	case "reddit":
