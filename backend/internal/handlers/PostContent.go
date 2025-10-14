@@ -33,11 +33,11 @@ func PostContent(w http.ResponseWriter, r *http.Request) {
 		api.HandleInternalError(w)
 		return
 	}
-	fmt.Println(uploads)
 	// no we have an "uploads" folder with struct objects. We need to call SendAPI() on all of these struct objects.
-
+	fmt.Println(uploads)
 	for _, v := range uploads {
-		fmt.Println(v)
+		tools.SendAPI(v)
+
 	}
 
 }
@@ -48,6 +48,7 @@ func BuildUploadStructs(params api.TotalFields) ([]tools.UploadContent, error) {
 	for _, p := range params.Platforms {
 		switch p {
 		case "youtube":
+			fmt.Println("Building Youtube!")
 			uploads = append(uploads, tools.YouTubeUploader{
 				AccessToken:   "123",
 				PlatformName:  "youtube",
