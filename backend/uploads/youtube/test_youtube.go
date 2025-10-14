@@ -237,7 +237,7 @@ func saveToken(file string, token *oauth2.Token) {
 }
 
 func UploadYoutube() {
-	fmt.Print("Youtube!")
+	fmt.Printf("\n UploadYoutube() function")
 	return
 	flag.Parse()
 

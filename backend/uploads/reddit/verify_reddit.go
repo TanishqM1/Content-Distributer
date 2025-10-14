@@ -18,7 +18,7 @@ const (
 )
 
 func UploadReddit() {
-	fmt.Print("Reddit!")
+	fmt.Print("UploadReddit() Function!")
 	return
 	// Step 1: Get access token
 	data := url.Values{}

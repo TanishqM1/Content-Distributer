@@ -48,7 +48,7 @@ func BuildUploadStructs(params api.TotalFields) ([]tools.UploadContent, error) {
 	for _, p := range params.Platforms {
 		switch p {
 		case "youtube":
-			fmt.Println("Building Youtube!")
+			fmt.Println("Building Youtube Struct!")
 			uploads = append(uploads, tools.YouTubeUploader{
 				AccessToken:   "123",
 				PlatformName:  "youtube",
