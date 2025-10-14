@@ -237,6 +237,8 @@ func saveToken(file string, token *oauth2.Token) {
 }
 
 func UploadYoutube() {
+	fmt.Print("Youtube!")
+	return
 	flag.Parse()
 
 	if *filename == "" {

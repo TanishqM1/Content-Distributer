@@ -19,6 +19,7 @@ const (
 
 func UploadReddit() {
 	fmt.Print("Reddit!")
+	return
 	// Step 1: Get access token
 	data := url.Values{}
 	data.Set("grant_type", "password")
