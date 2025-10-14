@@ -269,6 +269,6 @@ func UploadYoutube(title *string, description *string, category *string, privacy
 		log.Fatalf("Upload failed: %v", err)
 	}
 
-	fmt.Printf("Upload successful! Video ID: %v\n", response.Id)
+	fmt.Printf("\nUpload successful! Video ID: %v\n", response.Id)
 
 }
