@@ -137,7 +137,21 @@ func SendAPI(u UploadContent) {
 		pinterest.UploadPinterest(boardID, title, description, link, sourceType, imageURL)
 
 	case "reddit":
-		reddit.UploadReddit()
+		subreddit := body["sr"].(string)
+		postType := body["kind"].(string)
+		title := body["title"].(string)
+		resubmit := body["resubmit"].(bool)
+		nsfw := body["nsfw"].(bool)
+
+		var text, url string
+		if postType == "self" {
+			text = body["text"].(string)
+		} else if postType == "link" || postType == "image" {
+			url = body["url"].(string)
+		}
+
+		reddit.UploadReddit(subreddit, postType, title, text, url, resubmit, nsfw)
+
 	case "linkedin":
 		linkedin.UploadLinkedIn()
 
