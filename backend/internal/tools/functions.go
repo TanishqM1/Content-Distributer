@@ -125,7 +125,7 @@ func SendAPI(u UploadContent) {
 		if filename != "" && filename != "blank" {
 			// Use the file path from uploads folder
 			filePath := fmt.Sprintf("uploads/media/%s", filename)
-			youtube.UploadYoutube(&title, &description, &category, &privacy, &filePath, &tags)
+			youtube.UploadYoutube(title, description, category, privacy, filePath, tags)
 		} else {
 			fmt.Println("Skipping YouTube upload - no valid filename provided")
 			fmt.Printf("Filename received: '%s'\n", filename)
