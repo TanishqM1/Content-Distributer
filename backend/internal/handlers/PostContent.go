@@ -36,9 +36,18 @@ func PostContent(w http.ResponseWriter, r *http.Request) {
 	// no we have an "uploads" folder with struct objects. We need to call SendAPI() on all of these struct objects.
 	for _, v := range uploads {
 		tools.SendAPI(v)
-
 	}
 
+	// Send success response back to frontend
+	response := map[string]interface{}{
+		"success": true,
+		"message": "Content uploaded successfully",
+		"platforms": params.Platforms,
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	json.NewEncoder(w).Encode(response)
 }
 
 func BuildUploadStructs(params api.TotalFields) ([]tools.UploadContent, error) {

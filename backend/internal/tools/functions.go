@@ -1,6 +1,9 @@
 package tools
 
 import (
+	"fmt"
+
+	"github.com/TanishqM1/SocialContentDistributer/uploads/instagram"
 	"github.com/TanishqM1/SocialContentDistributer/uploads/linkedin"
 	"github.com/TanishqM1/SocialContentDistributer/uploads/pinterest"
 	"github.com/TanishqM1/SocialContentDistributer/uploads/reddit"
@@ -10,20 +13,14 @@ import (
 // youtube
 func (y YouTubeUploader) BuildAPI() map[string]interface{} {
 	return map[string]interface{}{
-		"access_token":  y.AccessToken,
-		"platform_name": y.PlatformName,
-		"snippet": map[string]interface{}{
-			"title":       y.Title,
-			"description": y.Description,
-			"tags":        y.Tags,
-			"categoryId":  y.CategoryID,
-		},
-		"status": map[string]interface{}{
-			"privacyStatus": y.PrivacyStatus,
-		},
-		"media": map[string]interface{}{
-			"file_data": y.MediaFile,
-		},
+		"access_token":   y.AccessToken,
+		"platform_name":  y.PlatformName,
+		"title":          y.Title,
+		"description":    y.Description,
+		"tags":           y.Tags,
+		"category_id":    y.CategoryID,
+		"privacy_status": y.PrivacyStatus,
+		"media_file":     y.MediaFile,
 	}
 }
 
@@ -113,18 +110,34 @@ func SendAPI(u UploadContent) {
 
 	switch platform {
 	case "youtube":
-		title := body["snippet"].(map[string]interface{})["title"].(string)
-		description := body["snippet"].(map[string]interface{})["description"].(string)
-		category := body["snippet"].(map[string]interface{})["categoryId"].(string)
-		privacy := body["status"].(map[string]interface{})["privacyStatus"].(string)
-		filename := body["media"].(map[string]interface{})["file_data"].(string)
-		tagslist := body["snippet"].(map[string]interface{})["tags"].([]string)
+		title := getStringValue(body, "title")
+		description := getStringValue(body, "description")
+		category := getStringValue(body, "category_id")
+		privacy := getStringValue(body, "privacy_status")
+		filename := getStringValue(body, "media_file")
+		tagslist := getStringArrayValue(body, "tags")
 		var tags string
 		for _, v := range tagslist {
 			tags += v
 		}
 
-		youtube.UploadYoutube(&title, &description, &category, &privacy, &filename, &tags)
+		// Only proceed if we have a valid filename
+		if filename != "" && filename != "blank" {
+			// Use the file path from uploads folder
+			filePath := fmt.Sprintf("uploads/media/%s", filename)
+			youtube.UploadYoutube(&title, &description, &category, &privacy, &filePath, &tags)
+		} else {
+			fmt.Println("Skipping YouTube upload - no valid filename provided")
+			fmt.Printf("Filename received: '%s'\n", filename)
+		}
+
+	case "instagram":
+		imageURL := getStringValue(body, "image_url")
+		caption := getStringValue(body, "caption")
+		locationID := getStringValue(body, "location_id")
+		userTags := getStringValue(body, "user_tags")
+
+		instagram.UploadInstagram(&imageURL, &caption, &locationID, &userTags)
 
 	case "pinterest":
 		pinterest.UploadPinterest()
@@ -135,4 +148,23 @@ func SendAPI(u UploadContent) {
 
 	}
 
+}
+
+// Helper functions to safely extract values from map
+func getStringValue(body map[string]interface{}, key string) string {
+	if val, ok := body[key]; ok && val != nil {
+		if str, ok := val.(string); ok {
+			return str
+		}
+	}
+	return ""
+}
+
+func getStringArrayValue(body map[string]interface{}, key string) []string {
+	if val, ok := body[key]; ok && val != nil {
+		if arr, ok := val.([]string); ok {
+			return arr
+		}
+	}
+	return []string{}
 }
