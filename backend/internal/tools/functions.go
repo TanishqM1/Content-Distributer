@@ -124,9 +124,10 @@ func SendAPI(u UploadContent) {
 			tags += v
 		}
 
-		youtube.UploadYoutube(&title, &description, &category, &privacy, &filename, &tags)
+		youtube.UploadYoutube(title, description, category, privacy, filename, tags)
 
 	case "pinterest":
+
 		pinterest.UploadPinterest()
 	case "reddit":
 		reddit.UploadReddit()

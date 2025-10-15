@@ -227,13 +227,9 @@ func saveToken(file string, token *oauth2.Token) {
 	json.NewEncoder(f).Encode(token)
 }
 
-func UploadYoutube(title *string, description *string, category *string, privacy *string, filename *string, keywords *string) {
+func UploadYoutube(title string, description string, category string, privacy string, filename string, keywords string) {
 	fmt.Printf("\n UploadYoutube() function")
 	flag.Parse()
-
-	if *filename == "" {
-		log.Fatalf("You must provide a filename of a video file to upload")
-	}
 
 	client := getClient(youtube.YoutubeUploadScope)
 
@@ -244,24 +240,24 @@ func UploadYoutube(title *string, description *string, category *string, privacy
 
 	upload := &youtube.Video{
 		Snippet: &youtube.VideoSnippet{
-			Title:       *title,
-			Description: *description,
-			CategoryId:  *category,
+			Title:       title,
+			Description: description,
+			CategoryId:  category,
 		},
-		Status: &youtube.VideoStatus{PrivacyStatus: *privacy},
+		Status: &youtube.VideoStatus{PrivacyStatus: privacy},
 	}
 
 	// The API returns a 400 Bad Request response if tags is an empty string.
-	if strings.Trim(*keywords, "") != "" {
-		upload.Snippet.Tags = strings.Split(*keywords, ",")
+	if strings.Trim(keywords, "") != "" {
+		upload.Snippet.Tags = strings.Split(keywords, ",")
 	}
 
 	call := service.Videos.Insert([]string{"snippet", "status"}, upload)
 
-	file, err := os.Open(*filename)
+	file, err := os.Open(filename)
 	defer file.Close()
 	if err != nil {
-		log.Fatalf("Error opening %v: %v", *filename, err)
+		log.Fatalf("Error opening %v: %v", filename, err)
 	}
 
 	response, err := call.Media(file).Do()
