@@ -140,7 +140,7 @@ func SendAPI(u UploadContent) {
 		subreddit := body["sr"].(string)
 		postType := body["kind"].(string)
 		title := body["title"].(string)
-		resubmit := body["resubmit"].(bool)
+		resubmit := true
 		nsfw := body["nsfw"].(bool)
 
 		var text, url string
