@@ -127,8 +127,15 @@ func SendAPI(u UploadContent) {
 		youtube.UploadYoutube(title, description, category, privacy, filename, tags)
 
 	case "pinterest":
+		boardID := body["board_id"].(string)
+		title := body["title"].(string)
+		description := body["description"].(string)
+		link := body["link"].(string)
+		sourceType := body["media_source"].(map[string]interface{})["source_type"].(string)
+		imageURL := body["media_source"].(map[string]interface{})["url"].(string)
 
-		pinterest.UploadPinterest()
+		pinterest.UploadPinterest(boardID, title, description, link, sourceType, imageURL)
+
 	case "reddit":
 		reddit.UploadReddit()
 	case "linkedin":
