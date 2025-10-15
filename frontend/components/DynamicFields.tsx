@@ -47,10 +47,12 @@ export function DynamicFields({
     };
 
     // Create label with platform badges showing which platforms need this field
+    const isRequired = requiredFields.includes(field);
     const label = (
       <div className="flex items-center gap-2">
         <Label htmlFor={field} className="text-sm font-medium capitalize">
           {field.replace(/_/g, " ")}
+          {isRequired && <span className="text-red-500 ml-1">*</span>}
         </Label>
         <div className="flex gap-1">
           {platforms.map((platform) => (
@@ -113,7 +115,6 @@ export function DynamicFields({
       // URL fields - need to be valid URLs
       case "image_url":
       case "thumbnail":
-      case "video_file":
       case "link":
         return (
           <div key={field} className="space-y-2">
@@ -130,6 +131,10 @@ export function DynamicFields({
             )}
           </div>
         );
+
+      // Video file field - hidden since we use drag & drop
+      case "video_file":
+        return null; // Don't show this field - we handle it with drag & drop
 
       // Tags field - user enters comma-separated values
       case "tags":
@@ -153,7 +158,7 @@ export function DynamicFields({
         return (
           <div key={field} className="space-y-2">
             {label}
-            <Select {...fieldProps}>
+            <Select onValueChange={(value) => register(field).onChange({ target: { value } })}>
               <SelectTrigger>
                 <SelectValue placeholder="Select privacy status" />
               </SelectTrigger>
@@ -175,7 +180,7 @@ export function DynamicFields({
         return (
           <div key={field} className="space-y-2">
             {label}
-            <Select {...fieldProps}>
+            <Select onValueChange={(value) => register(field).onChange({ target: { value } })}>
               <SelectTrigger>
                 <SelectValue placeholder="Select post type" />
               </SelectTrigger>
@@ -197,7 +202,7 @@ export function DynamicFields({
         return (
           <div key={field} className="space-y-2">
             {label}
-            <Select {...fieldProps}>
+            <Select onValueChange={(value) => register(field).onChange({ target: { value } })}>
               <SelectTrigger>
                 <SelectValue placeholder="Select visibility" />
               </SelectTrigger>
@@ -218,7 +223,7 @@ export function DynamicFields({
         return (
           <div key={field} className="space-y-2">
             {label}
-            <Select {...fieldProps}>
+            <Select onValueChange={(value) => register(field).onChange({ target: { value } })}>
               <SelectTrigger>
                 <SelectValue placeholder="Select NSFW status" />
               </SelectTrigger>
@@ -234,8 +239,41 @@ export function DynamicFields({
           </div>
         );
 
-      // Optional text fields for various platform-specific settings
+      // YouTube Category ID dropdown
       case "category_id":
+        return (
+          <div key={field} className="space-y-2">
+            {label}
+            <Select onValueChange={(value) => register(field).onChange({ target: { value } })}>
+              <SelectTrigger>
+                <SelectValue placeholder="Select YouTube category" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="1">Film & Animation</SelectItem>
+                <SelectItem value="2">Autos & Vehicles</SelectItem>
+                <SelectItem value="10">Music</SelectItem>
+                <SelectItem value="15">Pets & Animals</SelectItem>
+                <SelectItem value="17">Sports</SelectItem>
+                <SelectItem value="19">Travel & Events</SelectItem>
+                <SelectItem value="20">Gaming</SelectItem>
+                <SelectItem value="22">People & Blogs</SelectItem>
+                <SelectItem value="23">Comedy</SelectItem>
+                <SelectItem value="24">Entertainment</SelectItem>
+                <SelectItem value="25">News & Politics</SelectItem>
+                <SelectItem value="26">Howto & Style</SelectItem>
+                <SelectItem value="27">Education</SelectItem>
+                <SelectItem value="28">Science & Technology</SelectItem>
+                <SelectItem value="29">Nonprofits & Activism</SelectItem>
+              </SelectContent>
+            </Select>
+            {helperText}
+            {error && (
+              <p className="text-sm text-red-500">{error.message}</p>
+            )}
+          </div>
+        );
+
+      // Optional text fields for various platform-specific settings
       case "location_id":
       case "source_type":
       case "lifecycle_state":

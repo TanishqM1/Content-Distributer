@@ -29,27 +29,27 @@ export const PLATFORM_NAMES: Record<Platform, string> = {
 };
 
 export const FIELD_DESCRIPTIONS: Record<FieldKey, string> = {
-  title: "Title of post/video",
-  description: "Long description/body",
-  caption: "Short caption / post text",
-  tags: "Keywords array",
-  image_url: "Image URL",
-  thumbnail: "Thumbnail image",
-  video_file: "Video file URL/path",
-  link: "External URL",
-  content: "Text body (self post)",
-  category_id: "YouTube category",
-  privacy_status: "Visibility",
-  location_id: "Location tag",
-  user_tags: "Mention users",
-  subreddit: "Target subreddit",
-  post_type: "Post type",
-  nsfw: "NSFW flag",
-  board_id: "Board to pin",
-  source_type: "Media source type",
-  author: "Actor URN",
-  lifecycle_state: "Publication state",
-  visibility: "Post visibility"
+  title: "Title of your post/video (required)",
+  description: "Detailed description of your content (required)",
+  caption: "Short caption for Instagram/LinkedIn posts",
+  tags: "Keywords to help people find your content (comma-separated)",
+  image_url: "URL of the image you want to post",
+  thumbnail: "Thumbnail image URL",
+  video_file: "Video file (handled by drag & drop above)",
+  link: "External URL to share",
+  content: "Text content for Reddit posts",
+  category_id: "YouTube category (required for YouTube)",
+  privacy_status: "Who can see your video (required for YouTube)",
+  location_id: "Instagram location (optional)",
+  user_tags: "Instagram users to tag (comma-separated usernames)",
+  subreddit: "Which subreddit to post to (required for Reddit)",
+  post_type: "Type of Reddit post (required for Reddit)",
+  nsfw: "Is this content NSFW? (required for Reddit)",
+  board_id: "Pinterest board to pin to (required for Pinterest)",
+  source_type: "Type of media source (required for Pinterest)",
+  author: "LinkedIn author URN (required for LinkedIn)",
+  lifecycle_state: "Publication state (required for LinkedIn)",
+  visibility: "Who can see your post (required for LinkedIn)"
 };
 
 export const FIELD_APPLIES_TO: Record<FieldKey, Platform[]> = {

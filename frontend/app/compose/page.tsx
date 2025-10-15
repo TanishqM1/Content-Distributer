@@ -12,6 +12,8 @@ import { FieldReferenceTable } from "@/components/FieldReferenceTable";
 import { VideoUpload } from "@/components/VideoUpload";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { useToast } from "@/components/ui/use-toast";
+import { Toaster } from "@/components/ui/toaster";
 import { ArrowLeft, Settings, Save, FileVideo } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
@@ -22,6 +24,7 @@ export default function ComposePage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [selectedVideo, setSelectedVideo] = useState<File | null>(null);
   const [currentStep, setCurrentStep] = useState<"platforms" | "content" | "review">("platforms");
+  const { toast } = useToast();
 
   const requiredFields = getRequiredFields(selectedPlatforms);
   const schema = buildZodSchema(requiredFields, selectedPlatforms);
@@ -48,12 +51,48 @@ export default function ComposePage() {
     }
   };
 
-  const handleVideoSelect = (file: File | null) => {
+  const handleVideoSelect = async (file: File | null) => {
     setSelectedVideo(file);
     if (file) {
-      // Auto-populate video_file field if it's required
-      const videoUrl = URL.createObjectURL(file);
-      // Note: In a real app, you'd upload the file and get a URL
+      // Upload file to backend
+      try {
+        const formData = new globalThis.FormData();
+        formData.append('file', file);
+        
+        const response = await fetch('http://localhost:8000/upload/file', {
+          method: 'POST',
+          body: formData,
+        });
+        
+        if (response.ok) {
+          const result = await response.json();
+          console.log('File uploaded successfully:', result);
+          // Store the file path and filename for later use
+          const fileWithMetadata = Object.assign(file, {
+            path: result.file_path,
+            savedName: result.filename
+          });
+          setSelectedVideo(fileWithMetadata);
+          toast({
+            title: "File Uploaded!",
+            description: `"${file.name}" was uploaded successfully.`,
+          });
+        } else {
+          console.error('File upload failed');
+          toast({
+            title: "File Upload Failed",
+            description: "Failed to upload file. Please try again.",
+            variant: "destructive",
+          });
+        }
+      } catch (error) {
+        console.error('Error uploading file:', error);
+        toast({
+          title: "Error Uploading File",
+          description: "An unexpected error occurred during file upload. Please try again.",
+          variant: "destructive",
+        });
+      }
     }
   };
 
@@ -61,10 +100,50 @@ export default function ComposePage() {
     setIsSubmitting(true);
     try {
       console.log("Submitting data:", data);
-      alert("Content submitted successfully! Check console for JSON payload.");
+      
+      // Prepare the payload for the backend
+      const payload = {
+        platforms: selectedPlatforms,
+        ...data,
+        // Convert user_tags array to string for backend compatibility
+        // Keep tags as array since backend expects []string
+        user_tags: data.user_tags ? data.user_tags.join(',') : '',
+        // Add video file path if a file was selected
+        media_file: selectedVideo && (selectedVideo as any).savedName ? (selectedVideo as any).savedName : ''
+      };
+      
+      // Send to backend
+      const response = await fetch('http://localhost:8000/post/content', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload),
+      });
+      
+      if (response.ok) {
+        const result = await response.json();
+        console.log("Backend response:", result);
+        toast({
+          title: "Content Submitted!",
+          description: `Successfully posted to ${result.platforms?.join(', ') || 'selected platforms'}.`,
+        });
+      } else {
+        const error = await response.text();
+        console.error("Backend error:", error);
+        toast({
+          title: "Error Submitting Content",
+          description: `Backend error: ${error}`,
+          variant: "destructive",
+        });
+      }
     } catch (error) {
       console.error("Error submitting content:", error);
-      alert("Error submitting content. Please try again.");
+      toast({
+        title: "Submission Failed",
+        description: "An unexpected error occurred. Please try again.",
+        variant: "destructive",
+      });
     } finally {
       setIsSubmitting(false);
     }
@@ -226,6 +305,7 @@ export default function ComposePage() {
                 onClick={() => {
                   if (currentStep === "platforms") setCurrentStep("content");
                   if (currentStep === "content") setCurrentStep("review");
+                  if (currentStep === "review") handleSubmit(onSubmit)();
                 }}
                 disabled={currentStep === "review" || selectedPlatforms.length === 0}
               >
@@ -246,6 +326,7 @@ export default function ComposePage() {
           </div>
         </div>
       </div>
+      <Toaster />
     </div>
   );
 }
