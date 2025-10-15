@@ -1,4 +1,4 @@
-package api
+package main
 
 import (
 	"fmt"
@@ -13,6 +13,7 @@ import (
 
 func main() {
 	log.SetReportCaller(true)
+
 	var r *chi.Mux = chi.NewRouter()
 	// pass to handler
 	handlers.Handler(r)

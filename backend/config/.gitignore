@@ -28,6 +28,7 @@ vendor/
 .env.local
 config.yaml
 config.json
+client_secret.json
 
 # ===== Database / Uploads =====
 *.db
