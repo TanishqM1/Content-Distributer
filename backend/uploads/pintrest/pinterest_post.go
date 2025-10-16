@@ -16,6 +16,9 @@ import (
 // need imagepath, title, boardID. compatible with jpg as of now.
 
 func UploadPinterest(title string, caption string, imagePath string, sourceType string, imageURL string, boardID string) {
+
+	fmt.Printf("\n Retrieved the following fields: \n Title: %v \n Caption: %v \n imagePath: %v \n SourceType: %v \n ImageURL: %v \n BoardID: %v", title, caption, imagePath, sourceType, imageURL, boardID)
+	return
 	apiURL := "https://api.upload-post.com/api/upload_photos"
 	err := godotenv.Load("config/.env")
 	if err != nil {

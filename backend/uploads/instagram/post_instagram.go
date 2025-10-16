@@ -15,6 +15,9 @@ import (
 // WORKS INDEPENDENTLY, NEED TO HOOKUP W/ FRONTEND AND BACKEND
 
 func UploadInstagram(mediaPath string, title string, locationID string, userTags string) {
+
+	fmt.Printf("\n Retrieved the following fields: \n MediaPath: %v \n Title: %v \n locationID: %v \n userTags: %v", mediaPath, title, locationID, userTags)
+	return
 	apiURL := "https://api.upload-post.com/api/upload"
 	err := godotenv.Load("config/.env")
 	if err != nil {
