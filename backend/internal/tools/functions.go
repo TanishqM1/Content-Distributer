@@ -3,7 +3,6 @@ package tools
 import (
 	"fmt"
 
-	"github.com/TanishqM1/SocialContentDistributer/uploads/instagram"
 	"github.com/TanishqM1/SocialContentDistributer/uploads/linkedin"
 	"github.com/TanishqM1/SocialContentDistributer/uploads/pinterest"
 	"github.com/TanishqM1/SocialContentDistributer/uploads/reddit"
@@ -132,12 +131,14 @@ func SendAPI(u UploadContent) {
 		}
 
 	case "instagram":
-		imageURL := getStringValue(body, "image_url")
-		caption := getStringValue(body, "caption")
-		locationID := getStringValue(body, "location_id")
-		userTags := getStringValue(body, "user_tags")
+		// need to route to uploads/instagram/post_instagram
 
-		instagram.UploadInstagram(&imageURL, &caption, &locationID, &userTags)
+		// imageURL := getStringValue(body, "image_url")
+		// caption := getStringValue(body, "caption")
+		// locationID := getStringValue(body, "location_id")
+		// userTags := getStringValue(body, "user_tags")
+
+		// instagram.UploadInstagram(&imageURL, &caption, &locationID, &userTags)
 
 	case "pinterest":
 		boardID := body["board_id"].(string)
