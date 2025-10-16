@@ -10,13 +10,15 @@ import (
 )
 
 // WORKS INDEPENDENTLY, NEED TO HOOKUP W/ FRONTEND AND BACKEND
+// need imagepath, title, boardID.
 
 func main() {
 	apiURL := "https://api.upload-post.com/api/upload_photos"
 	apiKey := "placeholder"
 	imagePath := "images.jpg" // your local file (in same folder)
 	user := "SocialContentDistributer"
-	title := "This is my post!"
+	title := "Testing"
+	caption := "This is my post!"
 	boardID := "1126462994236750396"
 
 	// === Create multipart body ===
@@ -41,13 +43,13 @@ func main() {
 
 	// === Required Pinterest fields ===
 	writer.WriteField("user", user)
-	writer.WriteField("title", title)
+	writer.WriteField("title", caption)
 	writer.WriteField("platform[]", "pinterest")
 	writer.WriteField("async_upload", "false")
 
 	// Pinterest-specific metadata
 	writer.WriteField("pinterest_board_id", boardID)
-	writer.WriteField("pinterest_title", "Testing")
+	writer.WriteField("pinterest_title", title)
 	writer.WriteField("pinterest_cover_image_content_type", "image/jpeg")
 	writer.WriteField("pinterest_cover_image_data", "https://media.istockphoto.com/id/517188688/photo/mountain-landscape.jpg?s=612x612&w=0&k=20&c=A63koPKaCyIwQWOTFBRWXj_PwCrR4cEoOw2S9Q7yVl8=")
 	writer.WriteField("pinterest_cover_image_key_frame_time", "0e5171886886126120206342978")
