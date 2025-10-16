@@ -31,7 +31,6 @@ func (i InstagramUploader) BuildAPI() map[string]interface{} {
 		"platform_name": i.PlatformName,
 		"image_url":     i.ImageURL,
 		"caption":       i.Caption,
-		"location_id":   i.LocationID,
 		"user_tags":     i.UserTags,
 	}
 }
@@ -41,7 +40,6 @@ func (p PinterestUploader) BuildAPI() map[string]interface{} {
 	return map[string]interface{}{
 		"access_token":  p.AccessToken,
 		"platform_name": p.PlatformName,
-		"board_id":      p.BoardID,
 		"title":         p.Title,
 		"description":   p.Description,
 		"link":          p.Link,
@@ -136,16 +134,14 @@ func SendAPI(u UploadContent) {
 
 		imageURL := getStringValue(body, "image_url")
 		caption := getStringValue(body, "caption")
-		locationID := getStringValue(body, "location_id")
 		userTags := getStringValue(body, "user_tags")
 
-		instagram.UploadInstagram(imageURL, caption, locationID, userTags)
+		instagram.UploadInstagram(imageURL, caption, userTags)
 
 	case "pinterest":
 
 		// need to route to uploads/instagram/post_instagram
 
-		boardID := body["board_id"].(string)
 		title := body["title"].(string)
 		description := body["description"].(string)
 		imagePath := body["link"].(string)
@@ -153,7 +149,7 @@ func SendAPI(u UploadContent) {
 		imageURL := body["media_source"].(map[string]interface{})["url"].(string)
 
 		// pinterest.UploadPinterest(title, description, imagePath, sourceType, imageURL, boardID)
-		pinterest.UploadPinterest(title, description, imagePath, sourceType, imageURL, boardID)
+		pinterest.UploadPinterest(title, description, imagePath, sourceType, imageURL)
 
 	case "reddit":
 		subreddit := body["sr"].(string)
