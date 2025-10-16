@@ -4,21 +4,25 @@ import (
 	"bytes"
 	"fmt"
 	"io"
+	"log"
 	"mime/multipart"
 	"net/http"
 	"os"
+
+	"github.com/joho/godotenv"
 )
 
 // WORKS INDEPENDENTLY, NEED TO HOOKUP W/ FRONTEND AND BACKEND
-// need imagepath, title, boardID.
+// need imagepath, title, boardID. compatible with jpg as of now.
 
-func main() {
+func UploadPinterest(title string, caption string, imagePath string) {
 	apiURL := "https://api.upload-post.com/api/upload_photos"
-	apiKey := "placeholder"
-	imagePath := "images.jpg" // your local file (in same folder)
+	err := godotenv.Load("config/.env")
+	if err != nil {
+		log.Fatal("Cannot Load .ENV (UploadPinterest())")
+	}
+	apiKey := os.Getenv("UPLOAD_API_KEY")
 	user := "SocialContentDistributer"
-	title := "Testing"
-	caption := "This is my post!"
 	boardID := "1126462994236750396"
 
 	// === Create multipart body ===

@@ -11,7 +11,7 @@ import (
 
 // WORKS INDEPENDENTLY, NEED TO HOOKUP W/ FRONTEND AND BACKEND
 
-func main() {
+func UploadInstagram() {
 	apiURL := "https://api.upload-post.com/api/upload"
 	apiKey := "placeholder"
 	mediaPath := "images.jpg" // or "myvideo.mp4" — must be in same folder
