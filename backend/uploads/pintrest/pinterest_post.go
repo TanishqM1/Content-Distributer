@@ -15,9 +15,9 @@ import (
 // WORKS INDEPENDENTLY, NEED TO HOOKUP W/ FRONTEND AND BACKEND
 // need imagepath, title, boardID. compatible with jpg as of now.
 
-func UploadPinterest(title string, caption string, imagePath string, sourceType string, imageURL string, boardID string) {
+func UploadPinterest(title string, caption string, imagePath string, sourceType string, imageURL string) {
 
-	fmt.Printf("\n Retrieved the following fields: \n Title: %v \n Caption: %v \n imagePath: %v \n SourceType: %v \n ImageURL: %v \n BoardID: %v", title, caption, imagePath, sourceType, imageURL, boardID)
+	fmt.Printf("\n Retrieved the following fields: \n Title: %v \n Caption: %v \n imagePath: %v \n SourceType: %v \n ImageURL: %v ", title, caption, imagePath, sourceType, imageURL)
 	return
 	apiURL := "https://api.upload-post.com/api/upload_photos"
 	err := godotenv.Load("config/.env")
@@ -26,7 +26,7 @@ func UploadPinterest(title string, caption string, imagePath string, sourceType 
 	}
 	apiKey := os.Getenv("UPLOAD_API_KEY")
 	user := "SocialContentDistributer"
-	boardID = "1126462994236750396"
+	boardID := "1126462994236750396"
 
 	// === Create multipart body ===
 	body := &bytes.Buffer{}
