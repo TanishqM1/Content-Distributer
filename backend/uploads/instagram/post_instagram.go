@@ -4,18 +4,23 @@ import (
 	"bytes"
 	"fmt"
 	"io"
+	"log"
 	"mime/multipart"
 	"net/http"
 	"os"
+
+	"github.com/joho/godotenv"
 )
 
 // WORKS INDEPENDENTLY, NEED TO HOOKUP W/ FRONTEND AND BACKEND
 
-func UploadInstagram() {
+func UploadInstagram(mediaPath string, title string) {
 	apiURL := "https://api.upload-post.com/api/upload"
-	apiKey := "placeholder"
-	mediaPath := "images.jpg" // or "myvideo.mp4" — must be in same folder
-	title := "My Instagram Post"
+	err := godotenv.Load("config/.env")
+	if err != nil {
+		log.Fatal("Cannot Load .ENV (UploadPinterest())")
+	}
+	apiKey := os.Getenv("UPLOAD_API_KEY")
 	user := "SocialContentDistributer"
 
 	// === Create multipart form ===

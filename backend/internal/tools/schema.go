@@ -33,9 +33,9 @@ type PinterestUploader struct {
 	BoardID      string
 	Title        string
 	Description  string
-	Link         string
-	SourceType   string // e.g., "image_url"
-	ImageURL     string
+	Link         string // unneeded if locally upoading
+	SourceType   string // e.g., "image/jpeg"
+	ImageURL     string // unneeded if locally uploading
 }
 
 // ===== Reddit =====
