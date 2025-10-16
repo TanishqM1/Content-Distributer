@@ -4,7 +4,6 @@ import (
 	"fmt"
 
 	"github.com/TanishqM1/SocialContentDistributer/uploads/linkedin"
-	"github.com/TanishqM1/SocialContentDistributer/uploads/pinterest"
 	"github.com/TanishqM1/SocialContentDistributer/uploads/reddit"
 	"github.com/TanishqM1/SocialContentDistributer/uploads/youtube"
 )
@@ -141,14 +140,17 @@ func SendAPI(u UploadContent) {
 		// instagram.UploadInstagram(&imageURL, &caption, &locationID, &userTags)
 
 	case "pinterest":
-		boardID := body["board_id"].(string)
-		title := body["title"].(string)
-		description := body["description"].(string)
-		link := body["link"].(string)
-		sourceType := body["media_source"].(map[string]interface{})["source_type"].(string)
-		imageURL := body["media_source"].(map[string]interface{})["url"].(string)
 
-		pinterest.UploadPinterest(boardID, title, description, link, sourceType, imageURL)
+		// need to route to uploads/instagram/post_instagram
+
+		// boardID := body["board_id"].(string)
+		// title := body["title"].(string)
+		// description := body["description"].(string)
+		// link := body["link"].(string)
+		// sourceType := body["media_source"].(map[string]interface{})["source_type"].(string)
+		// imageURL := body["media_source"].(map[string]interface{})["url"].(string)
+
+		// pinterest.UploadPinterest(boardID, title, description, link, sourceType, imageURL)
 
 	case "reddit":
 		subreddit := body["sr"].(string)
