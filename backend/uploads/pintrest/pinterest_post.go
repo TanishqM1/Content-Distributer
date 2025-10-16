@@ -1,4 +1,4 @@
-package pinterest
+package instagram
 
 import (
 	"bytes"
@@ -15,7 +15,7 @@ import (
 // WORKS INDEPENDENTLY, NEED TO HOOKUP W/ FRONTEND AND BACKEND
 // need imagepath, title, boardID. compatible with jpg as of now.
 
-func UploadPinterest(title string, caption string, imagePath string) {
+func UploadPinterest(title string, caption string, imagePath string, sourceType string, imageURL string, boardID string) {
 	apiURL := "https://api.upload-post.com/api/upload_photos"
 	err := godotenv.Load("config/.env")
 	if err != nil {
@@ -23,7 +23,7 @@ func UploadPinterest(title string, caption string, imagePath string) {
 	}
 	apiKey := os.Getenv("UPLOAD_API_KEY")
 	user := "SocialContentDistributer"
-	boardID := "1126462994236750396"
+	boardID = "1126462994236750396"
 
 	// === Create multipart body ===
 	body := &bytes.Buffer{}

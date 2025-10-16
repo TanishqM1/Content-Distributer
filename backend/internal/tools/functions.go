@@ -3,9 +3,11 @@ package tools
 import (
 	"fmt"
 
-	"github.com/TanishqM1/SocialContentDistributer/uploads/linkedin"
-	"github.com/TanishqM1/SocialContentDistributer/uploads/reddit"
-	"github.com/TanishqM1/SocialContentDistributer/uploads/youtube"
+	instagram "github.com/TanishqM1/SocialContentDistributer/uploads/instagram"
+	linkedin "github.com/TanishqM1/SocialContentDistributer/uploads/linkedin"
+	pinterest "github.com/TanishqM1/SocialContentDistributer/uploads/pintrest"
+	reddit "github.com/TanishqM1/SocialContentDistributer/uploads/reddit"
+	youtube "github.com/TanishqM1/SocialContentDistributer/uploads/youtube"
 )
 
 // youtube
@@ -132,25 +134,26 @@ func SendAPI(u UploadContent) {
 	case "instagram":
 		// need to route to uploads/instagram/post_instagram
 
-		// imageURL := getStringValue(body, "image_url")
-		// caption := getStringValue(body, "caption")
-		// locationID := getStringValue(body, "location_id")
-		// userTags := getStringValue(body, "user_tags")
+		imageURL := getStringValue(body, "image_url")
+		caption := getStringValue(body, "caption")
+		locationID := getStringValue(body, "location_id")
+		userTags := getStringValue(body, "user_tags")
 
-		// instagram.UploadInstagram(&imageURL, &caption, &locationID, &userTags)
+		instagram.UploadInstagram(imageURL, caption, locationID, userTags)
 
 	case "pinterest":
 
 		// need to route to uploads/instagram/post_instagram
 
-		// boardID := body["board_id"].(string)
-		// title := body["title"].(string)
-		// description := body["description"].(string)
-		// link := body["link"].(string)
-		// sourceType := body["media_source"].(map[string]interface{})["source_type"].(string)
-		// imageURL := body["media_source"].(map[string]interface{})["url"].(string)
+		boardID := body["board_id"].(string)
+		title := body["title"].(string)
+		description := body["description"].(string)
+		imagePath := body["link"].(string)
+		sourceType := body["media_source"].(map[string]interface{})["source_type"].(string)
+		imageURL := body["media_source"].(map[string]interface{})["url"].(string)
 
-		// pinterest.UploadPinterest(boardID, title, description, link, sourceType, imageURL)
+		// pinterest.UploadPinterest(title, description, imagePath, sourceType, imageURL, boardID)
+		pinterest.UploadPinterest(title, description, imagePath, sourceType, imageURL, boardID)
 
 	case "reddit":
 		subreddit := body["sr"].(string)

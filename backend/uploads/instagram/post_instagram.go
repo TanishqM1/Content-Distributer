@@ -14,7 +14,7 @@ import (
 
 // WORKS INDEPENDENTLY, NEED TO HOOKUP W/ FRONTEND AND BACKEND
 
-func UploadInstagram(mediaPath string, title string) {
+func UploadInstagram(mediaPath string, title string, locationID string, userTags string) {
 	apiURL := "https://api.upload-post.com/api/upload"
 	err := godotenv.Load("config/.env")
 	if err != nil {
