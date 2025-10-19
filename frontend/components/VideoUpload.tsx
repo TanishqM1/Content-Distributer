@@ -10,9 +10,10 @@ interface VideoUploadProps {
   onVideoSelect: (file: File | null) => void;
   selectedVideo?: File | null;
   className?: string;
+  selectedPlatforms?: string[];
 }
 
-export function VideoUpload({ onVideoSelect, selectedVideo, className }: VideoUploadProps) {
+export function VideoUpload({ onVideoSelect, selectedVideo, className, selectedPlatforms = [] }: VideoUploadProps) {
   const [isDragOver, setIsDragOver] = useState(false);
 
   const handleDragOver = useCallback((e: React.DragEvent) => {
@@ -30,18 +31,53 @@ export function VideoUpload({ onVideoSelect, selectedVideo, className }: VideoUp
     setIsDragOver(false);
     
     const files = Array.from(e.dataTransfer.files);
+    
+    // Determine allowed file types based on selected platforms
+    const isPinterestOnly = selectedPlatforms.length === 1 && selectedPlatforms.includes('pinterest');
+    const isInstagramOnly = selectedPlatforms.length === 1 && selectedPlatforms.includes('instagram');
+    
+    let allowedTypes: string[] = [];
+    if (isPinterestOnly) {
+      // Pinterest only accepts images
+      allowedTypes = ['image/'];
+    } else if (isInstagramOnly) {
+      // Instagram accepts both images and videos
+      allowedTypes = ['image/', 'video/'];
+    } else {
+      // Multiple platforms or no platforms - allow both
+      allowedTypes = ['image/', 'video/'];
+    }
+    
     const mediaFile = files.find(file => 
-      file.type.startsWith('video/') || file.type.startsWith('image/')
+      allowedTypes.some(type => file.type.startsWith(type))
     );
     
     if (mediaFile) {
       onVideoSelect(mediaFile);
     }
-  }, [onVideoSelect]);
+  }, [onVideoSelect, selectedPlatforms]);
 
   const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    if (file && (file.type.startsWith('video/') || file.type.startsWith('image/'))) {
+    if (!file) return;
+    
+    // Determine allowed file types based on selected platforms
+    const isPinterestOnly = selectedPlatforms.length === 1 && selectedPlatforms.includes('pinterest');
+    const isInstagramOnly = selectedPlatforms.length === 1 && selectedPlatforms.includes('instagram');
+    
+    let allowedTypes: string[] = [];
+    if (isPinterestOnly) {
+      // Pinterest only accepts images
+      allowedTypes = ['image/'];
+    } else if (isInstagramOnly) {
+      // Instagram accepts both images and videos
+      allowedTypes = ['image/', 'video/'];
+    } else {
+      // Multiple platforms or no platforms - allow both
+      allowedTypes = ['image/', 'video/'];
+    }
+    
+    if (allowedTypes.some(type => file.type.startsWith(type))) {
       onVideoSelect(file);
     }
   };
