@@ -17,13 +17,14 @@ import (
 func UploadInstagram(mediaPath string, title string, userTags string) {
 
 	fmt.Printf("\n Retrieved the following fields: \n MediaPath: %v \n Title: %v  \n userTags: %v", mediaPath, title, userTags)
-	return
+
 	apiURL := "https://api.upload-post.com/api/upload"
 	err := godotenv.Load("config/.env")
 	if err != nil {
 		log.Fatal("Cannot Load .ENV (UploadPinterest())")
 	}
-	apiKey := os.Getenv("UPLOAD_API_KEY")
+	apiKey := os.Getenv("UploadsAPI")
+	fmt.Println(apiKey)
 	user := "SocialContentDistributer"
 
 	// === Create multipart form ===

@@ -18,13 +18,14 @@ import (
 func UploadPinterest(title string, caption string, imagePath string, sourceType string, imageURL string) {
 
 	fmt.Printf("\n Retrieved the following fields: \n Title: %v \n Caption: %v \n imagePath: %v \n SourceType: %v \n ImageURL: %v ", title, caption, imagePath, sourceType, imageURL)
-	return
+
 	apiURL := "https://api.upload-post.com/api/upload_photos"
 	err := godotenv.Load("config/.env")
 	if err != nil {
 		log.Fatal("Cannot Load .ENV (UploadPinterest())")
 	}
-	apiKey := os.Getenv("UPLOAD_API_KEY")
+	apiKey := os.Getenv("UploadsAPI")
+	fmt.Println(apiKey)
 	user := "SocialContentDistributer"
 	boardID := "1126462994236750396"
 
@@ -58,7 +59,7 @@ func UploadPinterest(title string, caption string, imagePath string, sourceType 
 	writer.WriteField("pinterest_board_id", boardID)
 	writer.WriteField("pinterest_title", title)
 	writer.WriteField("pinterest_cover_image_content_type", "image/jpeg")
-	writer.WriteField("pinterest_cover_image_data", "https://media.istockphoto.com/id/517188688/photo/mountain-landscape.jpg?s=612x612&w=0&k=20&c=A63koPKaCyIwQWOTFBRWXj_PwCrR4cEoOw2S9Q7yVl8=")
+	// writer.WriteField("pinterest_cover_image_data", imagePath)
 	writer.WriteField("pinterest_cover_image_key_frame_time", "0e5171886886126120206342978")
 
 	writer.Close()

@@ -147,9 +147,9 @@ func SendAPI(u UploadContent, wg *sync.WaitGroup) {
 
 		title := body["title"].(string)
 		description := body["description"].(string)
-		imagePath := body["link"].(string)
 		sourceType := body["media_source"].(map[string]interface{})["source_type"].(string)
 		imageURL := body["media_source"].(map[string]interface{})["url"].(string)
+		imagePath := imageURL
 
 		// pinterest.UploadPinterest(title, description, imagePath, sourceType, imageURL, boardID)
 		pinterest.UploadPinterest(title, description, imagePath, sourceType, imageURL)
