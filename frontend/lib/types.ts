@@ -15,7 +15,7 @@ export type FieldKey =
 export const REQUIRED_BY_PLATFORM: Record<Platform, FieldKey[]> = {
   youtube:    ["title", "description", "video_file", "category_id", "privacy_status"], // plus optional: tags
   reddit:     ["title", "content", "subreddit", "post_type", "nsfw"],      // if link post: use `link` instead of `content`
-  instagram:  ["caption", "image_url"],               // or video_file; at least one media field required
+  instagram:  ["caption", "image_url", "user_tags"],  // or video_file; at least one media field required
   pinterest:  ["title", "image_url", "board_id", "description", "link", "source_type"],
   linkedin:   ["author", "visibility", "caption", "lifecycle_state"],    // caption used as post text
 };

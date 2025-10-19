@@ -189,7 +189,7 @@ export function transformToSubmitData(formData: FormData, selectedPlatforms: Pla
     category_id: formData.category_id || "",
     privacy_status: formData.privacy_status || "",
     location_id: formData.location_id || "",
-    user_tags: formData.user_tags || [],
+    user_tags: formData.user_tags || '',
     subreddit: formData.subreddit || "",
     post_type: formData.post_type || "",
     nsfw: formData.nsfw || false,
