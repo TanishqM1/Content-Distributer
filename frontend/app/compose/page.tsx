@@ -45,7 +45,14 @@ export default function ComposePage() {
 
   const handlePlatformToggle = (platform: Platform, checked: boolean) => {
     if (checked) {
-      setSelectedPlatforms(prev => [...prev, platform]);
+      let newPlatforms = [...selectedPlatforms, platform];
+      
+      // If Pinterest is being selected, remove YouTube (video-only platform)
+      if (platform === "pinterest") {
+        newPlatforms = newPlatforms.filter(p => p !== "youtube");
+      }
+      
+      setSelectedPlatforms(newPlatforms);
     } else {
       setSelectedPlatforms(prev => prev.filter(p => p !== platform));
       reset();
@@ -113,7 +120,9 @@ export default function ComposePage() {
         // user_tags is already a string from the form input
         user_tags: data.user_tags || '',
         // Add video file path if a file was selected
-        media_file: selectedVideo && (selectedVideo as any).savedName ? (selectedVideo as any).savedName : ''
+        media_file: selectedVideo && (selectedVideo as any).savedName ? (selectedVideo as any).savedName : '',
+        // Auto-set source_type for Pinterest
+        source_type: selectedPlatforms.includes('pinterest') ? 'image_url' : (data.source_type || '')
       };
       
       // Send to backend
@@ -237,6 +246,7 @@ export default function ComposePage() {
                 <VideoUpload
                   onVideoSelect={handleVideoSelect}
                   selectedVideo={selectedVideo}
+                  selectedPlatforms={selectedPlatforms}
                 />
 
                 {selectedPlatforms.length > 0 && (

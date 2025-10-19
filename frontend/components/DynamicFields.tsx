@@ -40,6 +40,11 @@ export function DynamicFields({
     const error = errors[field];
     const value = watchedValues[field];
 
+    // Hide source_type field for Pinterest since it's auto-populated
+    if (field === 'source_type' && selectedPlatforms.includes('pinterest')) {
+      return null;
+    }
+
     // Set up form registration and error styling
     const fieldProps = {
       ...register(field),
