@@ -2,6 +2,7 @@ package tools
 
 import (
 	"fmt"
+	"sync"
 
 	instagram "github.com/TanishqM1/SocialContentDistributer/uploads/instagram"
 	linkedin "github.com/TanishqM1/SocialContentDistributer/uploads/linkedin"
@@ -100,7 +101,9 @@ func (l LinkedInUploader) BuildAPI() map[string]interface{} {
 }
 
 // basic implementation
-func SendAPI(u UploadContent) {
+
+// to make SendAPI concurrent, we can simply run all the functions in parallel, as we don't care which ones run when, and we aren't appending anything.
+func SendAPI(u UploadContent, wg *sync.WaitGroup) {
 	// implement SendAPI
 	body := u.BuildAPI()
 	// jsonData, _ := json.Marshal(body) --> this is a byte array!
@@ -171,7 +174,7 @@ func SendAPI(u UploadContent) {
 		linkedin.UploadLinkedIn()
 
 	}
-
+	wg.Done()
 }
 
 // Helper functions to safely extract values from map
