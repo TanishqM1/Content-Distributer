@@ -33,6 +33,7 @@ export default function ComposePage() {
     register,
     handleSubmit,
     watch,
+    setValue,
     formState: { errors },
     reset
   } = useForm<FormData>({
@@ -73,6 +74,10 @@ export default function ComposePage() {
             savedName: result.filename
           });
           setSelectedVideo(fileWithMetadata);
+          
+          // Auto-populate image_url with the uploaded file path
+          setValue('image_url', result.file_path);
+          
           toast({
             title: "File Uploaded!",
             description: `"${file.name}" was uploaded successfully.`,
@@ -105,9 +110,8 @@ export default function ComposePage() {
       const payload = {
         platforms: selectedPlatforms,
         ...data,
-        // Convert user_tags array to string for backend compatibility
-        // Keep tags as array since backend expects []string
-        user_tags: data.user_tags ? data.user_tags.join(',') : '',
+        // user_tags is already a string from the form input
+        user_tags: data.user_tags || '',
         // Add video file path if a file was selected
         media_file: selectedVideo && (selectedVideo as any).savedName ? (selectedVideo as any).savedName : ''
       };
