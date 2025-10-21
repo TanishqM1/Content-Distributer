@@ -7,14 +7,10 @@ import (
 	"log"
 	"net/http"
 	"net/url"
+	"os"
 	"strings"
-)
 
-const (
-	clientID     = "eSffeXojzcwY07XiIZMyRA"
-	clientSecret = "HjfMyVo9KnCtSwKCi5cbqT-5f5-fPg"
-	username     = "Happy_Bookkeeper6491"
-	password     = "Social#2510"
+	"github.com/joho/godotenv"
 )
 
 func UploadReddit(subreddit, postType, title, text, link string, resubmit, nsfw bool) {
@@ -27,6 +23,15 @@ func UploadReddit(subreddit, postType, title, text, link string, resubmit, nsfw 
 	fmt.Printf("  Resubmit: %v\n", resubmit)
 	fmt.Printf("  NSFW: %v\n", nsfw)
 	fmt.Println("------------------------------------")
+
+	err := godotenv.Load("config/.env")
+	if err != nil {
+		log.Fatal("Cannot Load .ENV (UploadPinterest())")
+	}
+	clientID := os.Getenv("clientID")
+	clientSecret := os.Getenv("clientSecret")
+	username := os.Getenv("username")
+	password := os.Getenv("password")
 
 	// Step 1: Get access token
 	data := url.Values{}
