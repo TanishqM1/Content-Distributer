@@ -34,7 +34,13 @@ const platformIcons = {
  */
 export function PlatformToggles({ selectedPlatforms, onPlatformToggle }: PlatformTogglesProps) {
   // All the platforms we support
-  const platforms: Platform[] = ["youtube", "reddit", "instagram", "pinterest", "linkedin"];
+  const allPlatforms: Platform[] = ["youtube", "reddit", "instagram", "pinterest", "linkedin"];
+  
+  // Filter platforms based on Pinterest selection
+  // If Pinterest is selected, only show platforms that support images
+  const platforms = selectedPlatforms.includes("pinterest") 
+    ? allPlatforms.filter(platform => platform !== "youtube") // Remove YouTube (video-only)
+    : allPlatforms;
 
   return (
     <Card>

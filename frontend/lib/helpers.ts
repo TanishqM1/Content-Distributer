@@ -160,6 +160,31 @@ export function buildZodSchema(fields: FieldKey[], selectedPlatforms: Platform[]
     Object.assign(schemaFields, instagramSchema.shape);
   }
 
+  // Pinterest requires an image (not video) - must be image format
+  if (selectedPlatforms.includes("pinterest")) {
+    const pinterestSchema = z.object({
+      image_url: z.string().min(1, "Pinterest requires an image"),
+      video_file: z.string().optional(),
+    }).refine(
+      (data) => {
+        // Check if image_url points to an image file (not video)
+        if (!data.image_url) return false;
+        const imageExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.webp', '.bmp', '.tiff'];
+        const hasImageExtension = imageExtensions.some(ext => 
+          data.image_url.toLowerCase().includes(ext)
+        );
+        return hasImageExtension && !data.video_file;
+      },
+      {
+        message: "Pinterest only supports image formats (JPEG, PNG, GIF, WEBP, BMP, TIFF). Videos are not allowed.",
+        path: ["image_url"]
+      }
+    );
+    
+    // Add Pinterest's special validation to our main validation rules
+    Object.assign(schemaFields, pinterestSchema.shape);
+  }
+
   return z.object(schemaFields);
 }
 
@@ -189,7 +214,7 @@ export function transformToSubmitData(formData: FormData, selectedPlatforms: Pla
     category_id: formData.category_id || "",
     privacy_status: formData.privacy_status || "",
     location_id: formData.location_id || "",
-    user_tags: formData.user_tags || [],
+    user_tags: formData.user_tags || '',
     subreddit: formData.subreddit || "",
     post_type: formData.post_type || "",
     nsfw: formData.nsfw || false,

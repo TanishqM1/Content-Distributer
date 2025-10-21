@@ -4,12 +4,15 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"sync"
 
 	log "github.com/sirupsen/logrus"
 
 	"github.com/TanishqM1/SocialContentDistributer/api"
 	"github.com/TanishqM1/SocialContentDistributer/internal/tools"
 )
+
+var wg = sync.WaitGroup{}
 
 func PostContent(w http.ResponseWriter, r *http.Request) {
 	var params = api.TotalFields{}
@@ -35,10 +38,23 @@ func PostContent(w http.ResponseWriter, r *http.Request) {
 	}
 	// no we have an "uploads" folder with struct objects. We need to call SendAPI() on all of these struct objects.
 	for _, v := range uploads {
-		tools.SendAPI(v)
+		wg.Add(1)
+		go tools.SendAPI(v, &wg)
+	}
+	wg.Wait()
+	fmt.Printf("\n All Completed!")
+	// once all the api uploads are done (running concurrently), we can send the success response back to the frontend.
 
+	// Send success response back to frontend
+	response := map[string]interface{}{
+		"success":   true,
+		"message":   "Content uploaded successfully",
+		"platforms": params.Platforms,
 	}
 
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	json.NewEncoder(w).Encode(response)
 }
 
 func BuildUploadStructs(params api.TotalFields) ([]tools.UploadContent, error) {

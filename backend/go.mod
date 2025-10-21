@@ -4,6 +4,7 @@ go 1.25.2
 
 require (
 	github.com/go-chi/chi v1.5.5
+	github.com/joho/godotenv v1.5.1
 	github.com/sirupsen/logrus v1.9.3
 	golang.org/x/net v0.46.0
 	golang.org/x/oauth2 v0.32.0
