@@ -101,12 +101,12 @@ The frontend will be available at `http://localhost:3000`.
 
 ```
 Content-Distributer/
-├── backend/                 # The Go backend (where the magic happens)
+├── backend/                 # The Go backend 
 │   ├── cmd/api/            # Main application entry point
 │   ├── internal/           # Internal packages (handlers, tools, etc.)
 │   ├── uploads/            # Platform-specific upload implementations
 │   └── config/             # Configuration files and secrets
-├── frontend/               # The Next.js frontend (the pretty part)
+├── frontend/               # The Next.js frontend
 │   ├── app/                # Next.js app directory
 │   ├── components/         # Reusable React components
 │   └── lib/                # Utilities and type definitions
