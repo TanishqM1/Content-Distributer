@@ -1,3 +1,4 @@
+*this project is deprecated. It is managed privately*
 # Content Distributer 
 
 A multi-platform content distribution system designed to streamline the process of publishing content across multiple social media platforms. This application provides a unified interface for managing and distributing content, removing the need for repetitive manual posting.
@@ -142,5 +143,3 @@ This project is licensed under the MIT License.
 Thanks to all the open-source libraries used within this project and Upload-Post.com for social media api documentation
 
 ---
-
-*this project is deprecated. It is managed privately*
