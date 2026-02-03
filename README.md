@@ -131,19 +131,7 @@ Each platform requires its own API credentials. You'll need to:
 2. Generate API keys and access tokens
 3. Configure the appropriate credentials in your environment
 
-## Contributing
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add some amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
-## Known Issues (Because Nothing's Perfect)
-
-- Some platforms (e.g., Pinterest) may return inconsistent API responses depending on the uploaded content.
-- File validation can be further improved.
-- Certain error messages may require refinement for clarity.
+or you can use upload-post :) They provide a central platform with API keys & account management.
 
 ## License
 
@@ -155,4 +143,4 @@ Thanks to all the open-source libraries used within this project and Upload-Post
 
 ---
 
-*Built with ❤️ and way too much coffee by people who got tired of manually posting to social media.*
+*this project is deprecated. It is managed privately*
