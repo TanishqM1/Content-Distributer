@@ -3,6 +3,20 @@
 
 A multi-platform content distribution system designed to streamline the process of publishing content across multiple social media platforms. This application provides a unified interface for managing and distributing content, removing the need for repetitive manual posting.
 
+<details>
+  <summary>📸 Click to view screenshots</summary>
+
+  ### Landing Page
+  <img src="https://github.com/user-attachments/assets/51c2c676-a2c0-45f6-b764-3c87537fd560" width="1907" alt="Landing Page">
+
+  ### Platform Select Page
+  <img src="https://github.com/user-attachments/assets/3dcdee02-97c6-4f04-9498-9c4692dab9f9" width="1902" alt="Platform Select Page">
+
+  ### Upload Page
+  <img src="https://github.com/user-attachments/assets/ab8fab8c-5554-4b4a-b82b-596914d9d19c" width="1908" alt="Upload Page">
+
+</details>
+
 ## Overview
 
 The Content Distributer is a full-stack application intended to simplify social media content management for creators, marketers, and businesses. It supports automated content distribution across Instagram, Pinterest, YouTube, Reddit, and LinkedIn and more.
@@ -73,23 +87,6 @@ cd frontend
 npm run dev
 ```
 The frontend will be available at `http://localhost:3000`.
-
-<details>
-  <summary>📸 Click to view screenshots</summary>
-
-  ### Landing Page
-  <img src="https://github.com/user-attachments/assets/51c2c676-a2c0-45f6-b764-3c87537fd560" width="1907" alt="Landing Page">
-
-  ### Platform Select Page
-  <img src="https://github.com/user-attachments/assets/3dcdee02-97c6-4f04-9498-9c4692dab9f9" width="1902" alt="Platform Select Page">
-
-  ### Upload Page
-  <img src="https://github.com/user-attachments/assets/ab8fab8c-5554-4b4a-b82b-596914d9d19c" width="1908" alt="Upload Page">
-
-</details>
-
-
-
 
 
 ## How It Actually Works
