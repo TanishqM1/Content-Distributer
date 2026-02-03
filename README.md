@@ -74,9 +74,19 @@ npm run dev
 ```
 The frontend will be available at `http://localhost:3000`.
 
-![Landing Page](<img width="1907" height="954" alt="image" src="https://github.com/user-attachments/assets/51c2c676-a2c0-45f6-b764-3c87537fd560" />)
-![Platform Select Page](<img width="1902" height="628" alt="image" src="https://github.com/user-attachments/assets/3dcdee02-97c6-4f04-9498-9c4692dab9f9" />)
-![Upload Page](<img width="1908" height="956" alt="image" src="https://github.com/user-attachments/assets/ab8fab8c-5554-4b4a-b82b-596914d9d19c" />)
+<details>
+  <summary>📸 Click to view screenshots</summary>
+
+  ### Landing Page
+  <img src="https://github.com/user-attachments/assets/51c2c676-a2c0-45f6-b764-3c87537fd560" width="1907" alt="Landing Page">
+
+  ### Platform Select Page
+  <img src="https://github.com/user-attachments/assets/3dcdee02-97c6-4f04-9498-9c4692dab9f9" width="1902" alt="Platform Select Page">
+
+  ### Upload Page
+  <img src="https://github.com/user-attachments/assets/ab8fab8c-5554-4b4a-b82b-596914d9d19c" width="1908" alt="Upload Page">
+
+</details>
 
 
 
